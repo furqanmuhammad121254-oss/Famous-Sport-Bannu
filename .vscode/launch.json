@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        
+        {
+            "type": "chrome",
+            "name": "http://LibraryManagementSystem",
+            "request": "launch",
+            "url": "http://LibraryManagementSystemnew"
+        }
+    ]
+}
