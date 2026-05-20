@@ -6,6 +6,10 @@ import fs from "fs";
 
 const router = express.Router();
 
+// const uploadDir = "uploads";
+// if (!fs.existsSync(uploadDir)) {
+//   fs.mkdirSync(uploadDir);
+// }
 
 const storage = multer.diskStorage({
   destination: "uploads",

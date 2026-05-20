@@ -1,8 +1,12 @@
 import React from "react";
 import Navber from "../components/Navber";
 import ceo from "../assets/ceo.jpg";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
+
+  const navigate = useNavigate()
+
   return (
     <div className="min-h-screen bg-black text-white font-sans">
       <Navber />
@@ -48,7 +52,7 @@ const About = () => {
           {/* CEO INFO */}
           <div className="pt-4">
             <h3 className="text-xl font-bold">Asad Khan</h3>
-            <p className="text-yellow-500 text-sm">Founder & CEO</p>
+            <p className="text-yellow-500 text-sm">Founder & Owner</p>
           </div>
 
           {/* STATS */}
@@ -137,7 +141,7 @@ const About = () => {
           Upgrade your game with the best sports gear today.
         </p>
 
-        <button className="bg-yellow-400 text-black px-8 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition">
+        <button  onClick={()=> navigate("/shop")} className="bg-yellow-400 text-black px-8 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition">
           Shop Now
         </button>
       </section>

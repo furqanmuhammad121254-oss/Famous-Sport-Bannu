@@ -463,17 +463,6 @@ const LoginAdmin = () => {
             </button>
           </form>
 
-          <div className="flex justify-between mt-6 text-sm">
-            <button className="text-gray-500 hover:text-green-600 transition-colors">
-              Forgot Password?
-            </button>
-            <button
-              onClick={() => navigate("/signup")}
-              className="text-green-600 font-bold hover:underline"
-            >
-              Create Account
-            </button>
-          </div>
 
           {msg && (
             <div className="mt-6 p-3 bg-red-50 border border-red-200 rounded-lg animate-pulse">

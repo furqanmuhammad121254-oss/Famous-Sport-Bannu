@@ -27,18 +27,35 @@
 //     return isLoggedIn ? <Outlet /> : <Navigate to='/login' />
 // }
 
-// export default ProtectedRoutes\
+// export default ProtectedRoutes
+
+
+// import { Navigate } from "react-router-dom";
+
+// const AdminRoute = ({ children }) => {
+//   const user = JSON.parse(localStorage.getItem("user"));
+
+//   return user?.role === "admin"
+//     ? children
+//     : <Navigate to="/" />;
+// };
+
+// export default AdminRoute;
 
 
 
+import { Navigate } from "react-router-dom";
 
-// src/routes/PrivateRoute.jsx
-import { Navigate, Outlet } from "react-router-dom";
+const ProtectedRoute = ({ user, allowedRoles, children }) => {
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
 
-const PrivateRoute = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  if (!allowedRoles.includes(user.role)) {
+    return <Navigate to="/unauthorized" />;
+  }
 
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  return children;
 };
 
-export default PrivateRoute;
+export default ProtectedRoute;

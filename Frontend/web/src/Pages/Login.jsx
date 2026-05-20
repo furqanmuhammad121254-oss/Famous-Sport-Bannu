@@ -7,7 +7,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [msg, setMsg] = useState("");
-  const [errors, setErrors] = useState({}); // To track specific input errors
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,11 +15,6 @@ const Login = () => {
     if (errors[e.target.name]) {
       setErrors({ ...errors, [e.target.name]: "" });
     }
-  };
-
-  const handleForgotPassword = () => {
-    alert("Redirect to Forgot Password page");
-    // navigate("/forgot-password"); // if using react-router
   };
 
   // Validation Logic
@@ -44,27 +39,49 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setMsg(""); // Reset previous messages
+
+  //   if (!validateForm()) return; // Stop if validation fails
+
+  //   try {
+  //     const res = await api.post("/auth/login", formData);
+  //     setMsg(res.data.msg);
+
+  //     const user = res.data;
+
+  //     // role check
+
+  //       navigate("/");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMsg(""); // Reset previous messages
+    setMsg("");
 
-    if (!validateForm()) return; // Stop if validation fails
+    if (!validateForm()) return;
 
     try {
       const res = await api.post("/auth/login", formData);
+
       setMsg(res.data.msg);
 
-      const user = res.data;
+      // 👇 IMPORTANT FIX
+      const user = res.data.user; // backend se user object hona chahiye
+      const token = res.data.token;
 
-      // role check
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
 
+      // redirect
       navigate("/");
-
 
     } catch (error) {
       setMsg(error.response?.data?.msg || "Login failed. Please check your credentials.");
     }
+
   };
+
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -138,7 +155,7 @@ const Login = () => {
 
           {/* Links */}
           <div className="flex justify-between mt-6 text-sm">
-            <button  type="button"   onClick={handleForgotPassword} className="text-gray-500 hover:text-green-600 transition-colors">
+            <button className="text-gray-500 hover:text-green-600 transition-colors">
               Forgot Password?
             </button>
             <button
@@ -185,3 +202,5 @@ const Login = () => {
 };
 
 export default Login;
+
+

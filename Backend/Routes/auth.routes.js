@@ -2,10 +2,11 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
-import checkToken from "../middlewares/checkToken.js";
+
 
 
 const router = express.Router();
+// const mykeyForToken = '';
 const mykeyForToken = process.env.MY_KEY_FOR_TOKEN;
 
 
@@ -59,7 +60,7 @@ router.post("/login", async (req, res) => {
 });
 
 
-router.get("/me", checkToken, async (req, res) => {
+router.get("/me", async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select("-password");
     return res.status(200).json({ user });
