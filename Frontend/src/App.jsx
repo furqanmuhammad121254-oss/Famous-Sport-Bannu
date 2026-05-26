@@ -154,12 +154,12 @@ import Completeorder from "./Pages/Completeorder";
 import OrderComplete from "./Pages/OrderComplete";
 
 // Admin Screens
-import Home from "./Screen/Home";
-import Book from "./Screen/Book";
-import Students from "./Screen/Students";
-import Assign from "./Screen/Assign";
-import Returned from "./Screen/Returned";
-import Categories from "./Screen/Categories";
+import Home from "./Admin/Home";
+import Book from "./Admin/Book";
+import Students from "./Admin/Students";
+import Assign from "./Admin/Assign";
+import Returned from "./Admin/Returned";
+import Categories from "./Admin/Categories";
 
 // Layout + Protection
 import Layout from "./components/Layout";
@@ -182,7 +182,7 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         {/* ADMIN PROTECTED ROUTES */}
-        {/* <Route element={<ProtectedRoutes />}> */}
+        <Route element={<ProtectedRoutes />}>
           <Route element={<Layout />}>
             <Route path="/home" element={<Home />} />
             <Route path="/book" element={<Book />} />
@@ -191,7 +191,7 @@ function App() {
             <Route path="/returned" element={<Returned />} />
             <Route path="/categories" element={<Categories />} />
           </Route>
-        {/* </Route> */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );

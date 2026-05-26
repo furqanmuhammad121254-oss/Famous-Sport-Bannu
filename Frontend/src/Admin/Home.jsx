@@ -1,7 +1,7 @@
 import React from "react";
 import { Users, FolderOpen, ShoppingBag, ClipboardList, TrendingUp } from "lucide-react";
 
-const Home = () => {
+const Desboard = () => {
   // Mock statistical data card matrix
   const stats = [
     {
@@ -116,4 +116,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Desboard;
