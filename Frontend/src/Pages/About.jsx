@@ -13,7 +13,7 @@ const About = () => {
 
       {/* HERO SECTION */}
       <section className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12">
-        
+
         {/* IMAGE */}
         <div className="w-full md:w-1/2 relative">
           <div className="absolute -top-4 -left-4 w-64 h-64 bg-red-600 rounded-full blur-[80px] opacity-20"></div>
@@ -21,7 +21,7 @@ const About = () => {
           <img
             src={ceo}
             alt="CEO"
-            className="relative z-10 rounded-2xl shadow-2xl border-b-4 border-r-4 border-red-600 w-full h-[800px] object-cover hover:scale-105 transition duration-300"
+            className="relative z-10 rounded-2xl shadow-2xl border-b-4 border-r-4 border-red-600 w-[500px] h-[600px] object-cover hover:scale-105 transition duration-300 mt-15"
           />
         </div>
 
@@ -77,7 +77,7 @@ const About = () => {
       {/* MISSION & VISION */}
       <section className="max-w-6xl mx-auto px-6 mt-10">
         <div className="grid md:grid-cols-2 gap-8">
-          
+
           <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800 hover:scale-105 transition">
             <h4 className="text-xl font-bold text-yellow-400">Our Mission</h4>
             <p className="text-gray-400 mt-2 text-sm">
@@ -98,12 +98,12 @@ const About = () => {
       {/* WHY CHOOSE US */}
       <section className="bg-zinc-900 py-20 px-6 mt-16">
         <div className="max-w-5xl mx-auto text-center space-y-8">
-          
+
           <h3 className="text-3xl font-bold">Why Choose Us</h3>
           <div className="w-20 h-1 bg-yellow-400 mx-auto"></div>
 
           <div className="grid md:grid-cols-3 gap-10 mt-10">
-            
+
             <div className="space-y-3 hover:scale-105 transition">
               <div className="text-yellow-400 text-4xl">🏆</div>
               <h5 className="font-bold text-xl">Premium Quality</h5>
@@ -141,7 +141,7 @@ const About = () => {
           Upgrade your game with the best sports gear today.
         </p>
 
-        <button  onClick={()=> navigate("/shop")} className="bg-yellow-400 text-black px-8 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition">
+        <button onClick={() => navigate("/shop")} className="bg-yellow-400 text-black px-8 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition">
           Shop Now
         </button>
       </section>

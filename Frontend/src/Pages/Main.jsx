@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import api from "../services/api.js";
 import Navber from "../components/Navber";
 import player from "../assets/player.png";
+import background from "../assets/background.png"
+
 import bg from "../assets/bg1.jpg";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { useNavigate, NavLink } from "react-router-dom";
@@ -39,123 +41,84 @@ const Main = () => {
     <div>
 
       {/* HERO SECTION */}
-      {/* <div className='w-full h-[600px] bg-black text-white overflow-hidden'>
-        <Navber />
-        <main className='relative max-w-7xl mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center'>
+      <div className='w-full min-h-screen bg-neutral-950 text-white overflow-hidden relative selection:bg-yellow-400 selection:text-black'>
+        {/* Background Pattern / Texture */}
+        <img
+          src={background}
+          className="absolute inset-0 w-full h-full object-cover opacity-10 mix-blend-luminosity pointer-events-none"
+          alt=""
+        />
 
+        {/* Ambient Color Glows for Depth */}
+        <div className="absolute top-1/4 left-0 w-[300px] h-[300px] bg-yellow-500/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-yellow-600/10 rounded-full blur-[150px] pointer-events-none" />
 
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className='z-10 flex-1 text-center lg:text-left'
-          >
-            <h1 className='text-6xl md:text-7xl font-black pb-5 leading-tight'>
-              Welcome to <br /> Famous <span className='text-yellow-400'>Sports</span>
-            </h1>
-
-            <h1 className='mt-0 text-gray-400 max-w-md text-lg'>
-              Premium sports gear for every athlete.
-            </h1>
-
-            <div className='mt-10 flex gap-4 mb-20 lg:mb-50 justify-center lg:justify-start'>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate("/Shop")}
-                className='px-10 py-4 bg-yellow-400 rounded-2xl text-black font-bold shadow-lg shadow-yellow-400/20'
-              >
-                Shop Now
-              </motion.button>
-
-
-              <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                whileTap={{ scale: 0.95 }}
-                className='px-10 py-4 border border-white rounded-2xl font-bold transition-colors'
-              >
-                Contact Us
-              </motion.button>
-            </div>
-          </motion.div>
-
-
-          <motion.div
-            initial={{ opacity: 0, x: 100, scale: 0.9 }} // Start from right and slightly smaller
-            animate={{ opacity: 1, x: 0, scale: 1 }}    // Slide in and grow to full size
-            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="flex-1 flex justify-center lg:justify-end"
-          >
-            <img
-              src={player}
-              alt="Player"
-              className='mb-10 w-full max-w-xl object-contain'
-            />
-          </motion.div>
-
-        </main>
-      </div> */}
-
-
-      <div className='w-full min-h-screen bg-black text-white overflow-hidden'>
         <Navber />
 
-        <main className='relative max-w-7xl mx-auto px-6 lg:px-12 flex flex-col-reverse lg:flex-row items-center justify-between pt-10 lg:pt-0'>
+        {/* Main Layout Container */}
+        <main className='relative max-w-7xl mx-auto px-6 lg:px-12 min-h-[calc(100vh-80px)] flex flex-col-reverse lg:flex-row items-center justify-between py-12 lg:py-0 gap-0 mt-20'>
 
           {/* Text Section */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className='z-10 flex-1 text-center lg:text-left mb-10 lg:mt-0'
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className='z-10 flex-1 text-center lg:text-left unique-hero-text'
           >
-            <h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight'>
+            {/* Small Badge */}
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 mb-6">
+              ⚡ Premium Gear Available
+            </span>
+
+            <h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] text-neutral-50'>
               Welcome to <br />
-              Famous <span className='text-yellow-400'>Sports</span>
+              Famous <span className='text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 drop-shadow-sm'>Sports Bannu</span>
             </h1>
 
-            <p className='mt-5 text-gray-400 max-w-md mx-auto lg:mx-0 text-base md:text-lg'>
-              Premium sports gear for every athlete.
+            <p className='mt-6 text-neutral-400 max-w-md mx-auto lg:mx-0 text-base md:text-lg leading-relaxed font-normal'>
+              Equipping athletes with premium-grade sports gear. Engineered for performance, built for champions.
             </p>
 
+            {/* CTA Buttons */}
             <div className='mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start'>
-
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => navigate("/Shop")}
-                className='px-8 py-4 bg-yellow-400 rounded-2xl text-black font-bold shadow-lg shadow-yellow-400/20'
+                className='px-8 py-4 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-xl text-neutral-950 font-bold shadow-xl shadow-yellow-500/20 hover:shadow-yellow-500/30 transition-all duration-300'
               >
                 Shop Now
               </motion.button>
 
               <motion.button
                 whileHover={{
-                  scale: 1.05,
-                  backgroundColor: "rgba(255, 255, 255, 0.1)"
+                  scale: 1.02,
+                  y: -2,
+                  backgroundColor: "rgba(255, 255, 255, 0.05)"
                 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => navigate("/contact")}
-                className='px-8 py-4 border border-white rounded-2xl font-bold transition-colors'
+                className='px-8 py-4 border border-neutral-700 hover:border-neutral-400 rounded-xl font-semibold text-neutral-300 hover:text-white transition-all duration-300'
               >
                 Contact Us
               </motion.button>
-
             </div>
           </motion.div>
 
           {/* Image Section */}
           <motion.div
-            initial={{ opacity: 0, x: 100, scale: 0.9 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="flex-1 flex justify-center mt-0 lg:mb-0"
+            initial={{ opacity: 0, scale: 0.95, x: 50 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-1 flex justify-center relative w-full"
           >
+            {/* Subtle background glow directly behind the player image */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-gradient-to-tr from-yellow-500/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+
             <img
               src={player}
-              alt="Player"
-              className='w-[280px] sm:w-[350px] md:w-[450px] lg:w-[550px] object-contain'
+              alt="Featured Athlete"
+              className='w-[260px] sm:w-[320px] md:w-[420px] lg:w-[500px] xl:w-[540px] object-contain z-10 drop-shadow-[0_25px_50px_rgba(0,0,0,0.8)] filter contrast-[1.05]'
             />
           </motion.div>
 
@@ -166,88 +129,108 @@ const Main = () => {
 
       {/* CATEGORY SECTION */}
 
-      <div className='w-full min-h-[500px] bg-[#0e0e0e] py-12 px-6'>
+      <div className='w-full bg-neutral-950 py-24 px-6 relative selection:bg-yellow-400 selection:text-black'>
+        {/* Ambient Background Glow */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[300px] bg-yellow-500/5 rounded-full blur-[180px] pointer-events-none" />
 
-        {/* Section Heading */}
-        <motion.h3
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className='text-white text-3xl text-center font-black border-b-2 border-yellow-400/20 rounded-2xl pb-3 mx-auto w-fit px-10'
-        >
-          Catego<span className='text-yellow-400'>ries</span>
-        </motion.h3>
+        <div className="max-w-7xl mx-">
+          {/* Section Heading Header Block */}
+          <div className="text-center mb-16">
+            <motion.span
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-xs font-bold tracking-widest text-yellow-400 uppercase bg-yellow-400/10 px-4 py-1.5 rounded-full border border-yellow-400/20"
+            >
+              Explore Gear
+            </motion.span>
 
-        {/* Horizontal Scroll Container */}
-        <div className="mt-10 overflow-x-auto scroll-smooth pb-6 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <motion.h3
+              initial={{ opacity: 0, y: -15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className='text-white text-4xl md:text-5xl font-extrabold tracking-tight mt-4'
+            >
+              Shop by <span className='text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500'>Category</span>
+            </motion.h3>
+          </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={{
-              hidden: { opacity: 0 },
-              show: {
-                opacity: 1,
-                transition: { staggerChildren: 0.15 }
-              }
-            }}
-            className="flex gap-6 w-max px-4"
-          >
-            {categoryList.length > 0 ? (
-              categoryList.map((item) => (
-                <motion.div
-                  key={item._id}
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.8, y: 30 },
-                    show: { opacity: 1, scale: 1, y: 0 }
-                  }}
-                  whileHover={{ y: -10 }}
-                  className="bg-[#1e1e1e] w-[320px] p-5 rounded-xl border border-transparent hover:border-yellow-400/50 transition-colors duration-300 shadow-xl flex flex-col justify-between snap-start"
-                >
-                  <div>
-                    {/* Image Container */}
-                    <div className="overflow-hidden rounded-lg mb-4">
-                      <motion.img
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.4 }}
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-56 object-cover"
-                      />
+          {/* Horizontal Scroll Container */}
+          <div className="overflow-x-auto scroll-smooth pb-10 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.1 }
+                }
+              }}
+              className="flex gap-8 w-max px-4"
+            >
+              {categoryList.length > 0 ? (
+                categoryList.map((item) => (
+                  <motion.div
+                    key={item._id}
+                    variants={{
+                      hidden: { opacity: 0, y: 30 },
+                      show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+                    }}
+                    whileHover={{ y: -8 }}
+                   
+                    className="group bg-neutral-900/40 backdrop-blur-md w-[340px] sm:w-[380px] md:w-[400px] p-5 rounded-2xl border border-neutral-800/80 hover:border-yellow-400/40 transition-all duration-300 shadow-2xl flex flex-col justify-between snap-start"
+                  >
+                    <div>
+                      {/* Image Container - Height increased using aspect-[16/11] for a bigger view */}
+                      <div className="overflow-hidden rounded-xl mb-5 relative bg-neutral-950 aspect-[16/11]">
+                        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-transparent to-transparent z-10 transition-opacity group-hover:opacity-40" />
+
+                        <motion.img
+                          whileHover={{ scale: 1.05 }}
+                          transition={{ duration: 0.5, ease: "easeOut" }}
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover filter contrast-[1.02] brightness-[0.95]"
+                        />
+                      </div>
+
+                      {/* Info Metadata */}
+                      <div className="px-2">
+                        {/* Title is now text-2xl */}
+                        <h2 className="text-2xl font-black text-neutral-100 group-hover:text-yellow-400 transition-colors duration-200 uppercase tracking-tight">
+                          {item.name}
+                        </h2>
+
+                        <p className="text-neutral-400 mt-3 text-sm md:text-base leading-relaxed line-clamp-2 min-h-[48px]">
+                          {item.desc}
+                        </p>
+                      </div>
                     </div>
 
-                    {/* Title */}
-                    <h2 className="text-xl font-bold text-yellow-400">
-                      {item.name}
-                    </h2>
-
-                    {/* Description */}
-                    <p className="text-gray-400 mt-2 text-sm line-clamp-2">
-                      {item.desc}
-                    </p>
-                  </div>
-
-                  {/* Action Button */}
-                  <motion.button
-                    onClick={() => navigate("/shop")}
-                    whileTap={{ scale: 0.95 }}
-                    className="mt-6 w-full py-3 bg-yellow-400 text-black font-bold rounded-xl hover:bg-yellow-500 transition-colors shadow-md shadow-yellow-400/10"
-                  >
-                    View Products
-                  </motion.button>
-                </motion.div>
-              ))
-            ) : (
-              <div className="w-full text-center py-10">
-                <p className="text-gray-500">No categories found</p>
-              </div>
-            )}
-          </motion.div>
+                    {/* Action Button */}
+                    <div className="px-2 mt-6">
+                      <motion.button
+                        onClick={() => navigate("/shop")}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full py-4 bg-neutral-800 text-neutral-200 font-bold text-sm md:text-base rounded-xl group-hover:bg-gradient-to-r group-hover:from-yellow-400 group-hover:to-amber-500 group-hover:text-neutral-950 transition-all duration-300 shadow-lg"
+                      >
+                        View Products
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                <div className="w-full text-center py-20">
+                  <p className="text-neutral-500 font-medium text-lg">No categories found</p>
+                </div>
+              )}
+            </motion.div>
+          </div>
         </div>
       </div>
-
 
 
       {/* Describe */}
@@ -319,6 +302,7 @@ const Main = () => {
               className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
             >
               <motion.button
+              onClick={()=> navigate("/shop")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-8 rounded-lg transition-colors shadow-lg shadow-yellow-400/20"
@@ -327,6 +311,7 @@ const Main = () => {
               </motion.button>
 
               <motion.button
+              onClick={()=> navigate("/contact")}
                 whileHover={{ scale: 1.05, backgroundColor: "white", color: "black" }}
                 whileTap={{ scale: 0.95 }}
                 className="border border-white text-white font-bold py-3 px-8 rounded-lg transition-all"
@@ -428,9 +413,9 @@ const Main = () => {
             href="https://wa.me/923001234567"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#25D366] h1-4 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform"
+            className="bg-[#25D366] size-15 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform"
           >
-            <FaWhatsapp className="text-white text-3xl" />
+            <FaWhatsapp className="text-white text-3xl size-12" />
           </a>
         </div>
       </footer>

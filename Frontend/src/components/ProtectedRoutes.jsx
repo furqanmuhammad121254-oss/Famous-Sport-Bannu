@@ -3,59 +3,82 @@
 // import api from '../services/api';
 
 // function ProtectedRoutes() {
-//     const [user, setUser] = useState(null)
-//     const [isLoggedIn, setIsLoggedIn] = useState(null)
+//   const [user, setUser] = useState(null)
+//   const [isLoggedIn, setIsLoggedIn] = useState(null)
 
-//     async function getMe() {
-//         try {
-//             const res = await api.get('/auth/me');
-//             if (res.status === 200) {
-//                 setUser(res.data.user)
-//                 setIsLoggedIn(true)
-//             }
-//         } catch (error) {
-//             setIsLoggedIn(false)
-//         }
+//   const isAdmin = (req, res, next) => {
+//     if (req.user.role !== "admin") {
+//       return res.status(403).json({ msg: "Access denied: Admin only" });
 //     }
-//     useEffect(() => {
-//         getMe()
-//     }, [])
 
-//     if (isLoggedIn == null) return <h1>Checking Auth</h1>
+//     next();
+//   };
+
+//   export default isAdmin;
+
+//   async function getMe() {
+//     try {
+//       const res = await api.get('/auth/me');
+//       if (res.status === 200) {
+//         setUser(res.data.user)
+//         setIsLoggedIn(true)
+//       }
+//     } catch (error) {
+//       setIsLoggedIn(false)
+//     }
+//   }
+//   useEffect(() => {
+//     getMe()
+//   }, [])
+
+//   if (isLoggedIn == null) return <h1>Checking Auth</h1>
 
 
-//     return isLoggedIn ? <Outlet /> : <Navigate to='/login' />
+//   return isLoggedIn ? <Outlet /> : <Navigate to='/home' />
 // }
 
 // export default ProtectedRoutes
 
 
-// import { Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import api from "../services/api";
 
-// const AdminRoute = ({ children }) => {
-//   const user = JSON.parse(localStorage.getItem("user"));
+function ProtectedRoutes() {
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [user, setUser] = useState(null);
 
-//   return user?.role === "admin"
-//     ? children
-//     : <Navigate to="/" />;
-// };
+  async function getMe() {
+    try {
+      const token = localStorage.getItem("token");
 
-// export default AdminRoute;
+      if (!token) {
+        setIsLoggedIn(false);
+        return;
+      }
 
+      const res = await api.get("/auth/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
+      setUser(res.data.user);
+      setIsLoggedIn(true);
 
-import { Navigate } from "react-router-dom";
+    } catch (error) {
+      setIsLoggedIn(false);
+    }
+  }
 
-const ProtectedRoute = ({ user, allowedRoles, children }) => {
-  if (!user) {
+  useEffect(() => {
+    getMe();
+  }, []);
+
+  if (user && user.role !== "admin") {
     return <Navigate to="/login" />;
   }
 
-  if (!allowedRoles.includes(user.role)) {
-    return <Navigate to="/unauthorized" />;
-  }
+}
 
-  return children;
-};
-
-export default ProtectedRoute;
+export default ProtectedRoutes;
