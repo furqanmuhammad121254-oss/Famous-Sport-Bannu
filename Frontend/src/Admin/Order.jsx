@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Students = () => {
+const Order = () => {
   return (
     <div>
-      
+      Order
     </div>
   )
 }
 
-export default Students
+export default Order

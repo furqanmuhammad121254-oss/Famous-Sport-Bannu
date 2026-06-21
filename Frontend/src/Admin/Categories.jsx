@@ -132,7 +132,7 @@ const Categories = () => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-3">
           <form
             onSubmit={handleSubmit}
-            className="w-full max-w-sm bg-gray-900 rounded-2xl p-4 sm:p-6 space-y-3 border border-gray-800 shadow-2xl"
+            className="w-full max-w-sm bg-black/55 rounded-2xl p-4 sm:p-6 space-y-3 border border-gray-800 shadow-2xl"
           >
             <h2 className="text-lg sm:text-xl font-bold">
               {updateId ? "Edit" : "Create"} Category
@@ -151,7 +151,7 @@ const Categories = () => {
               value={form.name}
               onChange={handleChange}
               placeholder="Category Name"
-              className="w-full p-2 sm:p-3 bg-gray-800 text-white rounded border border-gray-700 focus:border-yellow-500 outline-none"
+              className="w-full p-2 sm:p-3 bg-gray-50 text-black rounded border border-gray-700 focus:border-yellow-500 outline-none"
               required
             />
 
@@ -160,7 +160,7 @@ const Categories = () => {
               value={form.desc}
               onChange={handleChange}
               placeholder="Description"
-              className="w-full p-2 sm:p-3 bg-gray-800 text-white rounded border border-gray-700 focus:border-yellow-500 outline-none"
+              className="w-full p-2 sm:p-3 bg-gray-50 text-black rounded border border-gray-700 focus:border-yellow-500 outline-none"
               required
             />
 

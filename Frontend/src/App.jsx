@@ -145,7 +145,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./Pages/Main";
 import Shop from "./Pages/Shop";
 import About from "./Pages/About";
-import Contact from "./Pages/Contact";
+import Contact from "./Pages/Contact"
 import Payment from "./Pages/Payment";
 import Cart from "./Pages/Cart";
 import Signup from "./Pages/Signup";
@@ -154,16 +154,23 @@ import Completeorder from "./Pages/Completeorder";
 import OrderComplete from "./Pages/OrderComplete";
 
 // Admin Screens
-import Home from "./Admin/Home";
+import AdminLogin from "../../Frontend/src/Admin/Pages/AdminLogin"
+import Desboard from "./Admin/Desboard";
 import Book from "./Admin/Book";
-import Students from "./Admin/Students";
+import User from "./Admin/User";
 import Assign from "./Admin/Assign";
+import AllProduct from "./Admin/AllProduct"
 import Returned from "./Admin/Returned";
 import Categories from "./Admin/Categories";
+import Order from "./Admin/Order";
+import Contacts from "./Admin/Contacts";
 
 // Layout + Protection
 import Layout from "./components/Layout";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+
+// import signupadmin from "../src/Admin/SignupAdmin"
+// import loginadmin from "../src/Admin/LoginAdmin"
 
 function App() {
   return (
@@ -181,17 +188,24 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
 
+
+
+        {/* <Route element={<ProtectedRoutes />}> */}
         {/* ADMIN PROTECTED ROUTES */}
-        <Route element={<ProtectedRoutes />}>
-          <Route element={<Layout />}>
-            <Route path="/home" element={<Home />} />
-            <Route path="/book" element={<Book />} />
-            <Route path="/students" element={<Students />} />
-            <Route path="/assign" element={<Assign />} />
-            <Route path="/returned" element={<Returned />} />
-            <Route path="/categories" element={<Categories />} />
-          </Route>
+        <Route path="/authlogin" element={<AdminLogin />} />
+
+        <Route path="/admin" element={<Layout />}>
+          <Route path="desboard" element={<Desboard />} />
+          <Route path="book" element={<Book />} />
+          <Route path="user" element={<User />} />
+          <Route path="assign" element={<Assign />} />
+          <Route path="allproduct" element={<AllProduct />} />
+          <Route path="order" element={<Order />} />
+          <Route path="returned" element={<Returned />} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="contacts" element={<Contacts />} />
         </Route>
+        {/* </Route> */}
       </Routes>
     </BrowserRouter>
   );

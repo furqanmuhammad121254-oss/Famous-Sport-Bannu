@@ -74,6 +74,7 @@ function ProtectedRoutes() {
   useEffect(() => {
     getMe();
   }, []);
+  
 
   if (user && user.role !== "admin") {
     return <Navigate to="/login" />;

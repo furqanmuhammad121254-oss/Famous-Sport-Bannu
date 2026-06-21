@@ -1,367 +1,681 @@
-import React, { useState, useEffect } from "react";
-import api from "../services/api.js";
-import { SlidersHorizontal, Plus, Pencil, Trash2, X, ImagePlus } from "lucide-react";
 
-const Assign = () => {
-  const [assignList, setAssignList] = useState([]);
-  const [preview, setPreview] = useState(null);
-  const [showForm, setShowForm] = useState(false);
-  const [updateId, setUpdateId] = useState(null);
+// import React, { useState } from "react";
+// import { Plus, ImagePlus, X, Info, DollarSign, Sliders, Layers, Folder } from "lucide-react";
 
+// const SportsProductForm = () => {
+//   // 1. CONDENSED FORM STATE (Only requested fields)
+//   const [form, setForm] = useState({
+//     name: "",          
+//     desc: "",   
+//     salePrice: "",
+//     lowProductLimit: "",    
+//     productStack: "",       
+//     productCollection: "",  
+//     mainImage: null,        
+//     additionalImages: []    
+//   });
+
+//   // Asset Preview States
+//   const [mainPreview, setMainPreview] = useState(null);
+//   const [additionalPreviews, setAdditionalPreviews] = useState([]);
+
+//   // Generic Input Change Handler
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setForm((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   // 2. MEDIA ASSETS HANDLERS
+//   const handleMainImageChange = (e) => {
+//     const file = e.target.files[0];
+//     if (!file) return;
+
+//     if (mainPreview) URL.revokeObjectURL(mainPreview);
+
+//     setForm((prev) => ({ ...prev, mainImage: file }));
+//     setMainPreview(URL.createObjectURL(file));
+//   };
+
+//   const handleAdditionalImagesChange = (e) => {
+//     const selectedFiles = Array.from(e.target.files);
+//     const slotsAvailable = 4 - form.additionalImages.length;
+//     if (slotsAvailable <= 0) return;
+
+//     const filesToAdd = selectedFiles.slice(0, slotsAvailable);
+
+//     setForm((prev) => ({
+//       ...prev,
+//       additionalImages: [...prev.additionalImages, ...filesToAdd],
+//     }));
+
+//     const newPreviews = filesToAdd.map((file) => URL.createObjectURL(file));
+//     setAdditionalPreviews((prev) => [...prev, ...newPreviews]);
+//   };
+
+//   const handleRemoveMainImage = () => {
+//     if (mainPreview) URL.revokeObjectURL(mainPreview);
+//     setForm((prev) => ({ ...prev, mainImage: null }));
+//     setMainPreview(null);
+//   };
+
+//   const handleRemoveAdditionalImage = (indexToRemove) => {
+//     URL.revokeObjectURL(additionalPreviews[indexToRemove]);
+
+//     setForm((prev) => ({
+//       ...prev,
+//       additionalImages: prev.additionalImages.filter((_, i) => i !== indexToRemove),
+//     }));
+//     setAdditionalPreviews((prev) => prev.filter((_, i) => i !== indexToRemove));
+//   };
+
+//   // 3. BACKEND SUBMISSION
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     if (!form.mainImage) {
+//       alert("⚠️ Please upload a main product cover image.");
+//       return;
+//     }
+
+//     try {
+//       const formData = new FormData();
+
+//       // Appending only the requested payload
+//       formData.append("name", form.name);
+//       formData.append("desc", form.desc); 
+//       formData.append("salePrice", form.salePrice);
+//       formData.append("lowProductLimit", form.lowProductLimit);
+//       formData.append("productStack", form.productStack);
+//       formData.append("productCollection", form.productCollection);
+
+//       formData.append("mainImage", form.mainImage);
+//       form.additionalImages.forEach((file) => {
+//         formData.append("additionalImages", file);
+//       });
+
+//       const response = await fetch("http://localhost:3000/Assign/create", {
+//         method: "POST",
+//         body: formData, 
+//       });
+
+//       const data = await response.json();
+
+//       if (data.success) {
+//         alert("🚀 Product processed and updated successfully.");
+        
+//         // Reset state
+//         setForm({
+//           name: "", desc: "", salePrice: "",
+//           lowProductLimit: "", productStack: "", productCollection: "",
+//           mainImage: null, additionalImages: []
+//         });
+//         setMainPreview(null);
+//         setAdditionalPreviews([]);
+//       } else {
+//         alert(`❌ Failed: ${data.msg}`);
+//       }
+
+//     } catch (error) {
+//       console.error("Submission Error:", error);
+//       alert("❌ Something went wrong while communicating with the server.");
+//     }
+//   };
+
+//   // Tailwind UI Config Classes
+//   const inputClass = "w-full bg-neutral-900/60 border border-neutral-800 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 text-neutral-100 placeholder-neutral-500 rounded-xl px-4 py-3 text-sm transition-all outline-none duration-200 backdrop-blur-sm";
+//   const labelClass = "block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2";
+//   const sectionCard = "bg-neutral-900/30 border border-neutral-800/80 backdrop-blur-md rounded-2xl p-6 shadow-xl shadow-black/20";
+
+//   return (
+//     <div className="min-h-screen bg-neutral-950 text-white font-sans antialiased p-4 md:p-8">
+//       <div className="max-w-6xl mx-auto relative">
+//         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-yellow-500/10 blur-[120px] pointer-events-none rounded-full" />
+
+//         {/* Top Header */}
+//         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10 pb-6 border-b border-neutral-900 relative z-10">
+//           <div>
+//             <div className="flex items-center gap-2 mb-1.5">
+//               <span className="h-2 w-2 rounded-full bg-yellow-400 animate-pulse" />
+//               <p className="text-xs font-bold text-yellow-400 tracking-widest uppercase">Catalog Subsystem</p>
+//             </div>
+//             <h1 className="text-3xl font-black tracking-tight text-neutral-100 md:text-4xl">
+//               Sports Product Configuration
+//             </h1>
+//           </div>
+
+//           <button
+//             type="submit"
+//             form="sports-product-form"
+//             className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-amber-400 hover:from-yellow-300 hover:to-amber-300 text-neutral-950 px-6 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2.5 transition-all duration-200 group"
+//           >
+//             <Plus size={18} className="stroke-[3] group-hover:rotate-90 transition-transform" />
+//             <span>Publish Product</span>
+//           </button>
+//         </div>
+
+//         {/* Form Grid Layout */}
+//         <form id="sports-product-form" onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
+          
+//           <div className="lg:col-span-2 space-y-8">
+//             {/* Core Details */}
+//             <div className={sectionCard}>
+//               <div className="flex items-center gap-3 mb-6">
+//                 <div className="p-2 bg-neutral-800/60 rounded-lg text-neutral-400"><Info size={18} /></div>
+//                 <h2 className="text-lg font-bold tracking-tight text-neutral-200">Identity & Taxonomy</h2>
+//               </div>
+
+//               <div className="space-y-5">
+//                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+//                   <div>
+//                     <label className={labelClass}>Product Name</label>
+//                     <input name="name" value={form.name} onChange={handleChange} placeholder="e.g., Elite Carbon Fiber Tennis Racket" className={inputClass} required />
+//                   </div>
+//                   <div>
+//                     <label className={labelClass}>Product Collection</label>
+//                     <div className="relative">
+//                       <input name="productCollection" value={form.productCollection} onChange={handleChange} placeholder="e.g., Summer Olympics Pro Series" className={inputClass} required />
+//                       <Folder size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500" />
+//                     </div>
+//                   </div>
+//                 </div>
+//                 <div>
+//                   <label className={labelClass}>Description / Specifications</label>
+//                   <textarea name="desc" value={form.desc} onChange={handleChange} placeholder="Detail core sporting utilities..." className={`${inputClass} h-32 resize-none`} required />
+//                 </div>
+//               </div>
+//             </div>
+
+//             {/* Pricing & Stock Grid unified */}
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+//               {/* Pricing */}
+//               <div className={sectionCard}>
+//                 <div className="flex items-center gap-3 mb-6">
+//                   <div className="p-2 bg-neutral-800/60 rounded-lg text-neutral-400"><DollarSign size={18} /></div>
+//                   <h2 className="text-lg font-bold tracking-tight text-neutral-200">Pricing Matrix</h2>
+//                 </div>
+//                 <div>
+//                   <label className={labelClass}>Active Sale Price</label>
+//                   <div className="relative">
+//                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 text-sm">$</span>
+//                     <input type="number" name="salePrice" value={form.salePrice} onChange={handleChange} placeholder="0.00" className={`${inputClass} pl-8`} required />
+//                   </div>
+//                 </div>
+//               </div>
+
+//               {/* Inventory Control */}
+//               <div className={sectionCard}>
+//                 <div className="flex items-center gap-3 mb-6">
+//                   <div className="p-2 bg-neutral-800/60 rounded-lg text-neutral-400"><Sliders size={18} /></div>
+//                   <h2 className="text-lg font-bold tracking-tight text-neutral-200">Inventory Control</h2>
+//                 </div>
+//                 <div className="space-y-4">
+//                   <div>
+//                     <label className={labelClass}>Product Stack (Stock Quantity)</label>
+//                     <input type="number" name="productStack" value={form.productStack} onChange={handleChange} placeholder="e.g., 150" min="0" className={inputClass} required />
+//                   </div>
+//                   <div>
+//                     <label className={labelClass}>Low Product Alert Limit</label>
+//                     <input type="number" name="lowProductLimit" value={form.lowProductLimit} onChange={handleChange} placeholder="e.g., 10" min="0" className={inputClass} required />
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+
+//           {/* Media Engine Ingestion Sidebar (1 Main + 4 Additional) */}
+//           <div className="space-y-8">
+//             <div className={sectionCard}>
+//               <div className="flex items-center gap-3 mb-6">
+//                 <div className="p-2 bg-neutral-800/60 rounded-lg text-neutral-400"><Layers size={18} /></div>
+//                 <h2 className="text-lg font-bold tracking-tight text-neutral-200">Media Management (5 Images)</h2>
+//               </div>
+
+//               <div className="space-y-6">
+//                 {/* Main Cover (Image 1) */}
+//                 <div>
+//                   <label className={labelClass}>Main Product Cover Image</label>
+//                   {mainPreview ? (
+//                     <div className="relative aspect-video rounded-xl border border-neutral-800 bg-neutral-950 overflow-hidden group">
+//                       <img src={mainPreview} alt="Hero representation" className="w-full h-full object-contain" />
+//                       <button
+//                         type="button"
+//                         onClick={handleRemoveMainImage}
+//                         className="absolute top-3 right-3 bg-neutral-900/90 hover:bg-red-500 p-2 rounded-full text-white backdrop-blur-md transition-colors"
+//                       >
+//                         <X size={14} />
+//                       </button>
+//                     </div>
+//                   ) : (
+//                     <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-neutral-800 bg-neutral-900/20 hover:bg-neutral-900/40 hover:border-yellow-500/40 rounded-xl transition-all cursor-pointer text-center p-4">
+//                       <ImagePlus size={24} className="mb-2 text-neutral-500" />
+//                       <span className="text-sm font-semibold text-neutral-300">Upload Cover Shot</span>
+//                       <input type="file" accept="image/*" onChange={handleMainImageChange} className="hidden" />
+//                     </label>
+//                   )}
+//                 </div>
+
+//                 <hr className="border-neutral-900" />
+
+//                 {/* Additional Gallery Engine (Remaining 4 Images) */}
+//                 <div>
+//                   <div className="flex justify-between items-center mb-2">
+//                     <label className="text-xs font-semibold text-neutral-400 uppercase tracking-wider">Supporting Gallery Images (4)</label>
+//                     <span className="text-[10px] bg-neutral-900 px-2 py-0.5 rounded font-mono text-neutral-500">
+//                       {form.additionalImages.length} / 4
+//                     </span>
+//                   </div>
+
+//                   {additionalPreviews.length > 0 && (
+//                     <div className="grid grid-cols-4 gap-2.5 mb-4">
+//                       {additionalPreviews.map((src, index) => (
+//                         <div key={index} className="relative aspect-square rounded-lg border border-neutral-800 bg-neutral-950 overflow-hidden">
+//                           <img src={src} alt="" className="w-full h-full object-cover" />
+//                           <button
+//                             type="button"
+//                             onClick={() => handleRemoveAdditionalImage(index)}
+//                             className="absolute top-1 right-1 bg-black/80 hover:bg-red-500 p-0.5 rounded-full text-white backdrop-blur-xs transition-colors"
+//                           >
+//                             <X size={10} />
+//                           </button>
+//                         </div>
+//                       ))}
+//                     </div>
+//                   )}
+
+//                   <label className={`flex flex-col items-center justify-center w-full h-28 border-2 border-dashed rounded-xl transition-all cursor-pointer p-4 text-center ${
+//                     form.additionalImages.length >= 4
+//                       ? "border-neutral-900 bg-neutral-950/20 text-neutral-700 pointer-events-none"
+//                       : "border-neutral-800 bg-neutral-900/10 hover:bg-neutral-900/30 hover:border-yellow-500/30 text-neutral-400"
+//                   }`}>
+//                     <Plus size={20} className="mb-1" />
+//                     <span className="text-xs font-semibold">
+//                       {form.additionalImages.length >= 4 ? "All slots filled" : "Attach Support Views"}
+//                     </span>
+//                     <input type="file" multiple accept="image/*" onChange={handleAdditionalImagesChange} disabled={form.additionalImages.length >= 4} className="hidden" />
+//                   </label>
+//                 </div>
+//               </div>
+//             </div>
+
+//             <button
+//               type="submit"
+//               className="w-full bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-black py-4 rounded-xl shadow-lg hover:opacity-95 active:scale-[0.99] transition-all uppercase tracking-wider text-sm"
+//             >
+//               Commit Configuration
+//             </button>
+//           </div>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default SportsProductForm;
+
+import React, { useState } from "react";
+import { X, UploadCloud, Tag, DollarSign, Layers, Folder } from "lucide-react";
+
+const SportsProductForm = () => {
+  // Controlled State matching all interactive fields
   const [form, setForm] = useState({
     name: "",
     desc: "",
-    price: "",
-    image: null,
+    salePrice: "",
+    lowProductLimit: "10", // reasonable default value
+    productStack: "",
+    productCollection: "",
+    mainImage: null,
   });
 
-  /* =====================
-     HANDLE INPUT
-  ===================== */
+  const [mainPreview, setMainPreview] = useState(null);
+  const [additionalImages, setAdditionalImages] = useState([]); // Array of objects: { file, preview }
+
+  // Generic Input Change Handler
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-
-    if (name === "image" && files && files[0]) {
-      setForm({ ...form, image: files[0] });
-      setPreview(URL.createObjectURL(files[0]));
-    } else {
-      setForm({ ...form, [name]: value });
-    }
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  /* =====================
-     FETCH DATA
-  ===================== */
-  const bookData = async () => {
-    try {
-      const res = await api.get("/AllAssign");
-      setAssignList(res.data.assignList || []);
-    } catch (error) {
-      console.error("Error loading products:", error);
-    }
+  // Main Cover Image Handler
+  const handleMainImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Revoke old object URL if exists to clear memory
+    if (mainPreview) URL.revokeObjectURL(mainPreview);
+
+    setForm((prev) => ({ ...prev, mainImage: file }));
+    setMainPreview(URL.createObjectURL(file));
   };
 
-  useEffect(() => {
-    bookData();
-  }, []);
+  // Remove Main Cover
+  const handleRemoveMainImage = () => {
+    if (mainPreview) URL.revokeObjectURL(mainPreview);
+    setForm((prev) => ({ ...prev, mainImage: null }));
+    setMainPreview(null);
+  };
 
-  /* =====================
-     SUBMIT
-  ===================== */
+  // Supporting Gallery Images Handler (Max 4 slots total)
+  const handleAdditionalImagesChange = (e) => {
+    const files = Array.from(e.target.files);
+    const slotsAvailable = 4 - additionalImages.length;
+    if (slotsAvailable <= 0) return;
+
+    const filesToAdd = files.slice(0, slotsAvailable);
+    const mapped = filesToAdd.map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setAdditionalImages((prev) => [...prev, ...mapped]);
+  };
+
+  // Remove single image from secondary slots
+  const handleRemoveAdditionalImage = (indexToRemove) => {
+    URL.revokeObjectURL(additionalImages[indexToRemove].preview);
+    setAdditionalImages((prev) => prev.filter((_, i) => i !== indexToRemove));
+  };
+
+  // Full Backend Ingestion Integration
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = new FormData();
-    data.append("name", form.name);
-    data.append("desc", form.desc);
-    data.append("price", form.price);
-
-    if (form.image) data.append("image", form.image);
+    // Custom UI Validation check
+    if (!form.mainImage) {
+      alert("⚠️ Please upload a primary main product image.");
+      return;
+    }
 
     try {
-      if (updateId) {
-        await api.put(`/Assign/update/${updateId}`, data);
+      const formData = new FormData();
+
+      // Append standard string fields
+      formData.append("name", form.name);
+      formData.append("desc", form.desc);
+      formData.append("salePrice", form.salePrice);
+      formData.append("productStack", form.productStack);
+      formData.append("lowProductLimit", form.lowProductLimit);
+      formData.append("productCollection", form.productCollection);
+
+      // Append Main Image File
+      formData.append("mainImage", form.mainImage);
+
+      // Append multi-file Array to "additionalImages" field key
+      additionalImages.forEach((imgObj) => {
+        formData.append("additionalImages", imgObj.file);
+      });
+
+      const response = await fetch("http://localhost:3000/Assign/create", {
+        method: "POST",
+        body: formData, // Automatically sets multi-part headers
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("🚀 Product processed and pushed to the inventory system successfully!");
+        
+        // Reset local states safely
+        setForm({
+          name: "",
+          desc: "",
+          salePrice: "",
+          lowProductLimit: "10",
+          productStack: "",
+          productCollection: "",
+          mainImage: null,
+        });
+
+        // Clear references
+        if (mainPreview) URL.revokeObjectURL(mainPreview);
+        additionalImages.forEach((img) => URL.revokeObjectURL(img.preview));
+
+        setMainPreview(null);
+        setAdditionalImages([]);
       } else {
-        await api.post("/Assign/create", data);
+        alert(`❌ API Target Failure: ${data.msg}`);
       }
-      bookData();
-      handleCancel();
     } catch (error) {
-      console.error("Submission failed:", error);
+      console.error("Transmission Error:", error);
+      alert("❌ Communication breakdown during server-side API ingestion.");
     }
-  };
-
-  /* =====================
-     EDIT
-  ===================== */
-  const handleEdit = (item) => {
-    setForm({
-      name: item.name,
-      desc: item.desc,
-      price: item.price,
-      image: null,
-    });
-
-    setPreview(item.image?.[0]);
-    setUpdateId(item._id);
-    setShowForm(true);
-  };
-
-  /* =====================
-     DELETE
-  ===================== */
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this entry?")) {
-      try {
-        await api.delete(`/Assign/delete/${id}`);
-        bookData();
-      } catch (error) {
-        console.error("Delete failed:", error);
-      }
-    }
-  };
-
-  /* =====================
-     CANCEL
-  ===================== */
-  const handleCancel = () => {
-    setShowForm(false);
-    setUpdateId(null);
-    setPreview(null);
-    setForm({ name: "", desc: "", price: "", image: null });
   };
 
   return (
-    <div className="w-full min-h-screen bg-neutral-950 text-neutral-100 selection:bg-yellow-400 selection:text-black">
-      
-      {/* HEADER SECTION */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-neutral-900 to-neutral-900/40 border border-neutral-800/80 p-6 rounded-2xl mb-8 shadow-xl flex items-center justify-between">
-        <div className="absolute top-0 right-0 w-[250px] h-full bg-yellow-400/5 blur-3xl rounded-full pointer-events-none" />
-        <div className="flex items-center gap-4">
-          <div className="p-3 bg-neutral-950 border border-neutral-800 rounded-xl text-yellow-400 shadow-inner">
-            <SlidersHorizontal size={22} />
-          </div>
-          <div>
-            <h1 className="text-2xl font-black tracking-tight uppercase text-white">
-              Management <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500">Panel</span>
-            </h1>
-            <p className="text-neutral-400 text-xs mt-0.5">Create, adjust, or remove products from your catalog database.</p>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-black via-zinc-950 to-black text-white p-6 flex justify-center antialiased">
+      <div className="w-full max-w-5xl">
+        
+        {/* HEADER */}
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-black text-white tracking-tight">
+            Create Sports Product
+          </h1>
+          <p className="text-zinc-500 text-sm mt-2">
+            Add a new item configuration to your digital platform catalog
+          </p>
         </div>
 
-        {/* INLINE HEADER ADD BUTTON */}
-        <button
-          onClick={() => setShowForm(true)}
-          className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-neutral-950 font-bold px-5 py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-yellow-500/10 active:scale-95"
+        {/* FORM SYSTEM */}
+        <form
+          onSubmit={handleSubmit}
+          className="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-6 md:p-10 space-y-8 backdrop-blur-lg shadow-2xl"
         >
-          <Plus size={16} strokeWidth={2.5} />
-          <span>Add Product</span>
-        </button>
-      </div>
+          {/* MAIN FORM FIELDS GRID */}
+          <div className="grid md:grid-cols-2 gap-8">
 
-      {/* FLOATING ACTION FLOATER BUTTON FOR MOBILE POPUPS */}
-      <button
-        onClick={() => setShowForm(true)}
-        className="sm:hidden fixed bottom-6 right-6 bg-gradient-to-r from-yellow-400 to-amber-500 text-neutral-950 p-4 rounded-full font-bold shadow-2xl z-40 active:scale-95"
-      >
-        <Plus size={24} strokeWidth={2.5} />
-      </button>
+            {/* LEFT COLUMN: IDENTIFICATION & METRICS */}
+            <div className="space-y-5">
 
-      {/* MODAL SYSTEM OVERLAY POPUP */}
-      {showForm && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex justify-center items-center z-50 p-4 animate-fadeIn">
-          <form
-            onSubmit={handleSubmit}
-            className="w-full max-w-md bg-neutral-900 border border-neutral-800/80 p-6 rounded-2xl space-y-5 shadow-2xl relative"
-          >
-            <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
-              <h2 className="text-lg font-black uppercase text-white tracking-tight">
-                {updateId ? "Modify" : "Register"} Product Entry
-              </h2>
-              <button type="button" onClick={handleCancel} className="text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-neutral-800 transition-colors">
-                <X size={18} />
-              </button>
-            </div>
-
-            {/* AVATAR / CARD IMAGE UPLOAD WORKSPACE PREVIEWER AREA */}
-            <div className="flex justify-center">
-              {preview ? (
-                <div className="relative group w-28 h-28">
-                  <img src={preview} className="w-full h-full rounded-2xl object-cover border border-neutral-700 shadow-md" alt="upload context visual" />
-                  <div className="absolute inset-0 bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity pointer-events-none">
-                    <p className="text-[10px] text-white font-semibold">Change Image</p>
-                  </div>
-                </div>
-              ) : (
-                <div className="w-28 h-28 border border-dashed border-neutral-700 bg-neutral-950/60 rounded-2xl flex flex-col items-center justify-center text-neutral-500 gap-1">
-                  <ImagePlus size={22} />
-                  <span className="text-[10px] font-medium">No Graphic</span>
-                </div>
-              )}
-            </div>
-
-            <div className="space-y-3.5">
+              {/* NAME */}
               <div>
-                <label className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block mb-1.5 pl-0.5">Product Name</label>
-                <input
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  placeholder="e.g., Premium Leather Cricket Bat"
-                  className="w-full h-11 px-4 bg-neutral-950 border border-neutral-800 rounded-xl text-sm text-neutral-100 outline-none focus:border-yellow-400/50 transition-colors"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block mb-1.5 pl-0.5">Item Description</label>
-                <textarea
-                  name="desc"
-                  value={form.desc}
-                  onChange={handleChange}
-                  placeholder="Write item technical parameters, size metrics, etc..."
-                  className="w-full p-4 h-24 bg-neutral-950 border border-neutral-800 rounded-xl text-sm text-neutral-100 outline-none focus:border-yellow-400/50 transition-colors resize-none"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block mb-1.5 pl-0.5">Price Target</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 font-bold text-sm">$</span>
+                <label className="text-xs text-zinc-400 font-semibold uppercase tracking-wider">Product Name</label>
+                <div className="flex items-center bg-zinc-950 border border-zinc-800 focus-within:border-amber-500 rounded-xl px-3 mt-1.5 transition-colors">
+                  <Tag size={16} className="text-zinc-500" />
                   <input
-                    type="number"
-                    name="price"
-                    value={form.price}
+                    name="name"
+                    value={form.name}
                     onChange={handleChange}
-                    placeholder="0.00"
-                    className="w-full h-11 pl-8 pr-4 bg-neutral-950 border border-neutral-800 rounded-xl text-sm text-neutral-100 outline-none focus:border-yellow-400/50 transition-colors"
+                    className="w-full bg-transparent p-3 outline-none text-sm text-zinc-100 placeholder-zinc-700"
+                    placeholder="e.g., Elite Match Willow Cricket Bat"
                     required
                   />
                 </div>
               </div>
 
+              {/* PRICE */}
               <div>
-                <label className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block mb-1.5 pl-0.5">Upload Asset</label>
-                <input 
-                  type="file" 
-                  name="image"
-                  onChange={handleChange} 
-                  className="w-full text-xs text-neutral-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-neutral-800 file:text-neutral-200 hover:file:bg-neutral-700 file:cursor-pointer bg-neutral-950 p-2 border border-neutral-800 rounded-xl" 
-                />
+                <label className="text-xs text-zinc-400 font-semibold uppercase tracking-wider">Sale Price</label>
+                <div className="flex items-center bg-zinc-950 border border-zinc-800 focus-within:border-amber-500 rounded-xl px-3 mt-1.5 transition-colors">
+                  <DollarSign size={16} className="text-zinc-500" />
+                  <input
+                    name="salePrice"
+                    value={form.salePrice}
+                    onChange={handleChange}
+                    className="w-full bg-transparent p-3 outline-none text-sm text-zinc-100 placeholder-zinc-700"
+                    placeholder="0.00"
+                    type="number"
+                    step="0.01"
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* STACK / INVENTORY QUANTITIES */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs text-zinc-400 font-semibold uppercase tracking-wider">Stock Level</label>
+                  <div className="flex items-center bg-zinc-950 border border-zinc-800 focus-within:border-amber-500 rounded-xl px-3 mt-1.5 transition-colors">
+                    <Layers size={16} className="text-zinc-500" />
+                    <input
+                      name="productStack"
+                      value={form.productStack}
+                      onChange={handleChange}
+                      type="number"
+                      min="0"
+                      className="w-full bg-transparent p-3 outline-none text-sm text-zinc-100 placeholder-zinc-700"
+                      placeholder="e.g., 45"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs text-zinc-400 font-semibold uppercase tracking-wider">Low Stock Limit</label>
+                  <div className="flex items-center bg-zinc-950 border border-zinc-800 focus-within:border-amber-500 rounded-xl px-3 mt-1.5 transition-colors">
+                    <Layers size={16} className="text-zinc-500 text-opacity-40" />
+                    <input
+                      name="lowProductLimit"
+                      value={form.lowProductLimit}
+                      onChange={handleChange}
+                      type="number"
+                      min="0"
+                      className="w-full bg-transparent p-3 outline-none text-sm text-zinc-100 placeholder-zinc-700"
+                      placeholder="10"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* COLLECTION TAXONOMY */}
+              <div>
+                <label className="text-xs text-zinc-400 font-semibold uppercase tracking-wider">Collection / Grouping</label>
+                <div className="flex items-center bg-zinc-950 border border-zinc-800 focus-within:border-amber-500 rounded-xl px-3 mt-1.5 transition-colors">
+                  <Folder size={16} className="text-zinc-500" />
+                  <input
+                    name="productCollection"
+                    value={form.productCollection}
+                    onChange={handleChange}
+                    className="w-full bg-transparent p-3 outline-none text-sm text-zinc-100 placeholder-zinc-700"
+                    placeholder="e.g., Premium Pro Equipment"
+                    required
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="flex gap-3 pt-2">
-              <button type="submit" className="flex-1 h-11 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-neutral-950 font-bold text-sm rounded-xl shadow-lg transition-colors">
-                {updateId ? "Update Product" : "Publish Item"}
-              </button>
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="flex-1 h-11 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-semibold text-sm rounded-xl transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+            {/* RIGHT COLUMN: 5 IMAGE MEDIA SYSTEM */}
+            <div className="space-y-5">
 
-
-      <div className="hidden sm:block overflow-hidden bg-neutral-900/40 border border-neutral-800/80 rounded-2xl shadow-2xl">
-        <table className="w-full min-w-[700px] text-left border-collapse">
-          <thead>
-            <tr className="bg-neutral-900 border-b border-neutral-800 text-neutral-400 text-xs font-bold uppercase tracking-wider">
-              <th className="p-4 pl-6">Display Frame</th>
-              <th className="p-4">Product Name</th>
-              <th className="p-4">Description Info</th>
-              <th className="p-4">Asset Value</th>
-              <th className="p-4 pr-6 text-center">Controls</th>
-            </tr>
-          </thead>
-
-          <tbody className="divide-y divide-neutral-800/60 bg-transparent">
-            {assignList.length > 0 ? (
-              assignList.map((item) => (
-                <tr key={item._id} className="hover:bg-neutral-900/30 transition-colors group">
-                  <td className="p-4 pl-6">
-                    <img
-                      src={item.image?.[0]}
-                      className="w-12 h-12 rounded-xl object-cover bg-neutral-950 border border-neutral-800 group-hover:border-neutral-700 transition-colors"
-                      alt=""
-                    />
-                  </td>
-                  <td className="p-4 font-bold text-white tracking-tight">{item.name}</td>
-                  <td className="p-4 text-neutral-400 text-sm max-w-xs truncate">{item.desc}</td>
-                  <td className="p-4 text-yellow-400 font-black text-sm">{item.price}</td>
-                  <td className="p-4 pr-6">
-                    <div className="flex items-center justify-center gap-3">
+              {/* COVER PICTURE CAPTURE SLOT */}
+              <div>
+                <label className="text-xs text-zinc-400 font-semibold uppercase tracking-wider">Main Cover Image</label>
+                <div className="mt-1.5 border border-dashed border-zinc-800 bg-zinc-950/30 rounded-xl p-4 text-center min-h-[174px] flex flex-col justify-center items-center relative">
+                  {mainPreview ? (
+                    <div className="relative w-full">
+                      <img
+                        src={mainPreview}
+                        alt="Catalog Primary Cover"
+                        className="w-full h-36 object-contain rounded-lg"
+                      />
                       <button
-                        onClick={() => handleEdit(item)}
-                        className="p-2 rounded-xl bg-neutral-950 border border-neutral-800 text-neutral-400 hover:text-yellow-400 hover:border-yellow-400/20 transition-all"
-                        title="Edit entry"
+                        type="button"
+                        onClick={handleRemoveMainImage}
+                        className="absolute top-1 right-1 bg-zinc-900 border border-zinc-800 hover:bg-red-500 p-1.5 rounded-full text-white transition-colors"
                       >
-                        <Pencil size={15} />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(item._id)}
-                        className="p-2 rounded-xl bg-neutral-950 border border-neutral-800 text-neutral-400 hover:text-red-400 hover:border-red-500/20 transition-all"
-                        title="Delete entry"
-                      >
-                        <Trash2 size={15} />
+                        <X size={12} />
                       </button>
                     </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5" className="p-16 text-center text-neutral-500 font-medium">
-                  No inventory data available currently.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-
-    
-      <div className="sm:hidden space-y-4">
-        {assignList.length > 0 ? (
-          assignList.map((item) => (
-            <div
-              key={item._id}
-              className="bg-neutral-900/40 rounded-2xl overflow-hidden border border-neutral-800/80 shadow-lg flex flex-col"
-            >
-              <div className="relative aspect-video w-full bg-neutral-950">
-                <img
-                  src={item.image?.[0]}
-                  className="w-full h-full object-cover"
-                  alt=""
-                />
-                <div className="absolute top-3 right-3 bg-neutral-950/80 backdrop-blur-md px-3 py-1 rounded-lg text-yellow-400 font-black text-sm border border-neutral-800">
-                  ${item.price}
+                  ) : (
+                    <label className="cursor-pointer flex flex-col items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors py-4 w-full h-full">
+                      <UploadCloud size={28} />
+                      <span className="text-xs font-medium">Upload primary storefront banner</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        hidden
+                        onChange={handleMainImageChange}
+                      />
+                    </label>
+                  )}
                 </div>
               </div>
 
-              <div className="p-4 space-y-3">
-                <div>
-                  <h2 className="text-base font-black text-white tracking-tight">{item.name}</h2>
-                  <p className="text-neutral-400 text-xs line-clamp-2 mt-1 leading-relaxed">
-                    {item.desc}
-                  </p>
+              {/* ADDITIONAL SUPPORTING GRAPHICS MODULE */}
+              <div>
+                <div className="flex justify-between items-center mb-1.5">
+                  <label className="text-xs text-zinc-400 font-semibold uppercase tracking-wider">
+                    Gallery Views (Max 4)
+                  </label>
+                  <span className="text-[10px] font-mono bg-zinc-950 border border-zinc-800 text-zinc-500 rounded px-1.5 py-0.5">
+                    {additionalImages.length} / 4 Used
+                  </span>
                 </div>
 
-                <div className="flex gap-2 pt-1 border-t border-neutral-800/60">
-                  <button
-                    onClick={() => handleEdit(item)}
-                    className="flex-1 flex items-center justify-center gap-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 py-2.5 rounded-xl text-xs font-bold transition-colors"
-                  >
-                    <Pencil size={13} />
-                    <span>Edit</span>
-                  </button>
-
-                  <button
-                    onClick={() => handleDelete(item._id)}
-                    className="flex-1 flex items-center justify-center gap-1.5 bg-red-950/40 border border-red-900/30 text-red-400 py-2.5 rounded-xl text-xs font-bold transition-colors"
-                  >
-                    <Trash2 size={13} />
-                    <span>Delete</span>
-                  </button>
+                {/* VISUAL FILE DISPLAY SYSTEM */}
+                <div className="grid grid-cols-4 gap-2 border border-zinc-950 bg-zinc-950/40 p-2 rounded-xl mb-3 min-h-[74px] items-center">
+                  {additionalImages.map((img, i) => (
+                    <div key={i} className="relative aspect-square border border-zinc-800 bg-black rounded-lg overflow-hidden group">
+                      <img
+                        src={img.preview}
+                        alt="Sub Asset"
+                        className="h-full w-full object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveAdditionalImage(i)}
+                        className="absolute top-0.5 right-0.5 bg-black/80 hover:bg-red-500 text-white p-0.5 rounded-full transition-colors"
+                      >
+                        <X size={10} />
+                      </button>
+                    </div>
+                  ))}
+                  {additionalImages.length === 0 && (
+                    <div className="col-span-4 text-center text-xs text-zinc-600 italic py-2">
+                      No angle perspectives loaded
+                    </div>
+                  )}
                 </div>
+
+                {/* CONDITIONAL ADD BUTTON OVERLAY */}
+                <label className={`flex items-center justify-center gap-2 border border-dashed rounded-xl p-3 text-center transition-all ${
+                  additionalImages.length >= 4
+                    ? "border-zinc-900 bg-zinc-950/20 text-zinc-700 pointer-events-none"
+                    : "border-zinc-800 bg-zinc-950/50 hover:border-zinc-600 text-zinc-400 cursor-pointer"
+                }`}>
+                  <span className="text-xs font-semibold">
+                    {additionalImages.length >= 4 ? "Slots Full" : "+ Append Side Angles"}
+                  </span>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={handleAdditionalImagesChange}
+                    disabled={additionalImages.length >= 4}
+                    hidden
+                  />
+                </label>
               </div>
+
             </div>
-          ))
-        ) : (
-          <div className="p-12 text-center text-neutral-500 text-sm font-medium">
-            No inventory data available currently.
           </div>
-        )}
-      </div>
 
+          {/* DESCRIPTION CONTAINER */}
+          <div>
+            <label className="text-xs text-zinc-400 font-semibold uppercase tracking-wider">Product Scope & Utilities</label>
+            <textarea
+              name="desc"
+              value={form.desc}
+              onChange={handleChange}
+              className="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl p-4 mt-1.5 h-24 outline-none text-sm text-zinc-100 placeholder-zinc-700 resize-none transition-colors"
+              placeholder="Provide a breakdown of product performance metrics, sport configurations, and construction profiles..."
+              required
+            />
+          </div>
+
+          {/* COMMIT / ACTIONS EXECUTION ROW */}
+          <div className="flex justify-end pt-2">
+            <button
+              type="submit"
+              className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-amber-500 text-black px-8 py-3.5 rounded-xl font-black text-sm tracking-wider uppercase hover:opacity-95 active:scale-[0.99] transition-all shadow-lg shadow-amber-500/5"
+            >
+              Commit Configuration
+            </button>
+          </div>
+
+        </form>
+      </div>
     </div>
   );
 };
 
-export default Assign;
+export default SportsProductForm;
