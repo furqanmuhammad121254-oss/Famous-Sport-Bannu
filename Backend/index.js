@@ -58,9 +58,6 @@ app.get(
 
 
 
-
-
-
 // Routes
 app.use("/auth", authRoutes);
 app.use("/Book", BookRoutes);
@@ -69,6 +66,8 @@ app.use("/", assignRoutes);
 app.use("/", returnedroutes);
 app.use("/", cateigoriesroutes);
 app.use("/api/contact", contactRoutes);
+
+
 
 // Server
 app.listen(3000, () => {
