@@ -327,103 +327,110 @@ const Main = () => {
       {/* Contact */}
 
       <footer className="bg-[#1a1a1a] text-white py-10 sm:py-12 px-4 sm:px-6 md:px-16 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
 
-          {/* COLUMN 1: BRAND INFO */}
-          <div className="space-y-4 sm:space-y-6">
-            <div className="flex items-center gap-2">
-              <div className="bg-white h-8 w-8 rounded flex items-center justify-center">
-                <span className="text-black font-bold text-base sm:text-xl">S</span>
-              </div>
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tighter">FAMOUS SPORTS</h2>
+        {/* COLUMN 1: BRAND INFO */}
+        <div className="space-y-4 sm:space-y-6">
+          <div className="flex items-center gap-2">
+            <div className="bg-white h-8 w-8 rounded flex items-center justify-center flex-shrink-0">
+              <span className="text-black font-bold text-base sm:text-xl">S</span>
             </div>
-            <h1 className="text-gray-400 leading-relaxed text-xs sm:text-sm">
-              Famous Sports is a Sports brand that specializes in providing premium
-              sportswear and equipment. We deal in all quality sports gear at the best
-              available rates in Pakistan.
-            </h1>
-            <div className="flex gap-3 sm:gap-4 text-lg sm:text-xl">
-              <div>
-                <a href="https://www.facebook.com/p/Famous-sports-bannu-100064238853027/"></a>
-                <FaFacebookF className="hover:text-yellow-400 cursor-pointer transition-colors" />
-              </div>
-
-              <FaInstagram className="hover:text-yellow-400 cursor-pointer transition-colors" />
-            </div>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tighter">FAMOUS SPORTS</h2>
           </div>
-
-          {/* COLUMN 2: QUICK LINKS */}
-          <div>
-            <h3 className="text-sm font-bold uppercase mb-4 sm:mb-6 tracking-widest">About Famous Sports</h3>
-            <ul className="space-y-3 sm:space-y-4 text-gray-400 text-xs sm:text-sm">
-              <li className="hover:text-white cursor-pointer transition-colors">Home</li>
-              <li className="hover:text-white cursor-pointer transition-colors">Shop Us</li>
-              <li className="hover:text-white cursor-pointer transition-colors">About us us</li>
-              <li className="hover:text-white cursor-pointer transition-colors">Contact</li>
-            </ul>
-          </div>
-
-          {/* COLUMN 3: GUIDES */}
-          <div>
-            <h3 className="text-sm font-bold uppercase mb-4 sm:mb-6 tracking-widest">Why We Choose</h3>
-            <ul className="space-y-3 sm:space-y-4 text-gray-400 text-xs sm:text-sm">
-              <li className="hover:text-white cursor-pointer transition-colors">Find your perfect Kitbag guide</li>
-              <li className="hover:text-white cursor-pointer transition-colors">A guide for Your English Willow Bat</li>
-              <li className="hover:text-white cursor-pointer transition-colors">Shipping & Handling</li>
-              <li className="hover:text-white cursor-pointer transition-colors">Returns & Exchange</li>
-              <li className="hover:text-white cursor-pointer transition-colors">Order Your Customized Kits</li>
-            </ul>
-          </div>
-
-          {/* COLUMN 4: STORE INFO */}
-          <div className="space-y-4 sm:space-y-5">
-            <h3 className="text-sm font-bold uppercase mb-4 sm:mb-6 tracking-widest">Store Information</h3>
-
-            <div className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-gray-400">
-              <FaMapMarkerAlt className="mt-1 text-white flex-shrink-0" />
-              <h1 className="leading-relaxed">Main Bazar Bannu, near Chowk Market, <br />Khyber Pakhtunkhwa - Pakistan</h1>
-            </div>
-
-            <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-400">
-              <FaWhatsapp className="text-white flex-shrink-0" />
-              <h1>+92 336 5397225</h1>
-            </div>
-
-            <div className="space-y-2">
-              <h1 className="text-[10px] sm:text-xs text-gray-500 font-bold">For International Queries:</h1>
-              <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-400">
-                <FaPhoneAlt className="text-white flex-shrink-0" />
-                <h1>+92 311 1933833</h1>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-400 break-all">
-              <FaEnvelope className="text-white flex-shrink-0" />
-              <h1>contact@famoussports.pk</h1>
-            </div>
-          </div>
-
-        </div>
-
-        {/* WHATSAPP FLOATING BUTTON */}
-        <div className="fixed bottom-4 sm:bottom-6 right-3 sm:right-4 md:right-6 z-50">
-          <a
-            href="https://wa.link/c0zu4c"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#25D366] w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform"
-          >
-            <FaWhatsapp className="text-white text-2xl sm:text-3xl md:text-4xl" />
-          </a>
-        </div>
-
-        {/* Copyright Section for Mobile */}
-        <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800 text-center">
-          <p className="text-gray-500 text-[10px] sm:text-xs">
-            © {new Date().getFullYear()} Famous Sports Bannu. All rights reserved.
+          <p className="text-gray-400 leading-relaxed text-xs sm:text-sm">
+            Famous Sports is a sports brand specializing in premium sportswear and equipment. 
+            We deal in top-quality sports gear at the best rates in Pakistan.
           </p>
+          <div className="flex gap-4 text-lg sm:text-xl">
+            <a 
+              href="https://www.facebook.com/p/Famous-sports-bannu-100064238853027/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-yellow-400 transition-colors"
+            >
+              <FaFacebookF />
+            </a>
+            <a 
+              href="#" 
+              className="text-gray-400 hover:text-yellow-400 transition-colors"
+            >
+              <FaInstagram />
+            </a>
+          </div>
         </div>
-      </footer>
+
+        {/* COLUMN 2: QUICK LINKS */}
+        <div>
+          <h3 className="text-sm font-bold uppercase mb-4 sm:mb-6 tracking-widest text-white">Quick Links</h3>
+          <ul className="space-y-3 text-gray-400 text-xs sm:text-sm">
+            <li><a href="#" className="hover:text-yellow-400 hover:underline cursor-pointer transition-all">Home</a></li>
+            <li><a href="#" className="hover:text-yellow-400 hover:underline cursor-pointer transition-all">Shop Us</a></li>
+            <li><a href="#" className="hover:text-yellow-400 hover:underline cursor-pointer transition-all">About Us</a></li>
+            <li><a href="#" className="hover:text-yellow-400 hover:underline cursor-pointer transition-all">Contact</a></li>
+          </ul>
+        </div>
+
+        {/* COLUMN 3: POPULAR CATEGORIES */}
+        <div>
+          <h3 className="text-sm font-bold uppercase mb-4 sm:mb-6 tracking-widest text-white">Our Products</h3>
+          <ul className="space-y-3 text-gray-400 text-xs sm:text-sm">
+            <li><a href="#" className="hover:text-yellow-400 hover:underline cursor-pointer transition-all">Sportswear</a></li>
+            <li><a href="#" className="hover:text-yellow-400 hover:underline cursor-pointer transition-all">Cricket Gear</a></li>
+            <li><a href="#" className="hover:text-yellow-400 hover:underline cursor-pointer transition-all">Football Equipment</a></li>
+            <li><a href="#" className="hover:text-yellow-400 hover:underline cursor-pointer transition-all">Fitness Accessories</a></li>
+          </ul>
+        </div>
+
+        {/* COLUMN 4: STORE INFO */}
+        <div className="space-y-4">
+          <h3 className="text-sm font-bold uppercase mb-4 sm:mb-6 tracking-widest text-white">Store Information</h3>
+
+          <div className="flex items-start gap-3 text-xs sm:text-sm text-gray-400">
+            <FaMapMarkerAlt className="mt-1 text-yellow-400 flex-shrink-0" />
+            <p className="leading-relaxed"><span className="font-semibold text-white">Address:</span> Parati Road, Bannu</p>
+          </div>
+
+          <div className="flex items-center gap-3 text-xs sm:text-sm text-gray-400">
+            <FaWhatsapp className="text-emerald-400 flex-shrink-0 text-base" />
+            <p><span className="font-semibold text-white">WhatsApp:</span> +92 336 5397225</p>
+          </div>
+
+          <div className="pt-1">
+            <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">For International Queries:</p>
+            <div className="flex items-center gap-3 text-xs sm:text-sm text-gray-400">
+              <FaPhoneAlt className="text-yellow-400 flex-shrink-0" />
+              <p>+92 336 5397225</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 text-xs sm:text-sm text-gray-400 break-all">
+            <FaEnvelope className="text-yellow-400 flex-shrink-0" />
+            <p>contact@famoussports.pk</p>
+          </div>
+        </div>
+
+      </div>
+
+      {/* WHATSAPP FLOATING BUTTON */}
+      <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50">
+        <a
+          href="https://wa.link/c0zu4c"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#25D366] w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-200"
+          aria-label="Contact us on WhatsApp"
+        >
+          <FaWhatsapp className="text-white text-2xl sm:text-3xl md:text-4xl" />
+        </a>
+      </div>
+
+      {/* COPYRIGHT SECTION */}
+      <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800 text-center">
+        <p className="text-gray-500 text-[10px] sm:text-xs">
+          © {new Date().getFullYear()} Famous Sports Bannu. All rights reserved.
+        </p>
+      </div>
+    </footer>
     </div>
   );
 };
