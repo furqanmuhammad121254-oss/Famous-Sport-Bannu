@@ -6,7 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import env from "dotenv";
 
-import connectDataBase from "./config/db.js";
+import connectDatabase from "./config/db.js";
 
 import checkRole from "./middlewares/checkRole.js";
 import checkToken from "./middlewares/checkToken.js";
@@ -21,10 +21,11 @@ import contactRoutes from "./routes/contactRoutes.js";
 
 env.config();
 
+
 const app = express();
 
 // Database
-connectDataBase();
+connectDatabase();
 
 // Middleware
 app.use(express.json());
@@ -70,6 +71,8 @@ app.use("/api/contact", contactRoutes);
 
 
 // Server
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
