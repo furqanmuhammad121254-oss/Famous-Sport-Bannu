@@ -8,7 +8,7 @@ import env from "dotenv";
 
 import connectDatabase from "./config/db.js";
 
-import checkRole from "./middlewares/CheckRole.js"
+import checkRole from "./middlewares/checkRole.js"
 import checkToken from "./middlewares/checkToken.js";
 
 import authRoutes from "./Routes/auth.routes.js";
