@@ -99,6 +99,8 @@ const Navbar = () => {
           )}
         </div>
 
+        
+
         {/* MOBILE TOGGLE */}
         <div className="flex md:hidden items-center gap-3">
           <CartIcon />
