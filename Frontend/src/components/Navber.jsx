@@ -68,6 +68,7 @@ const Navbar = () => {
       }}
       className="relative cursor-pointer"
     >
+      
       <div className="w-10 h-10 rounded-full bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
         <FaCartShopping className="text-yellow-400" />
       </div>
