@@ -8,7 +8,7 @@ import env from "dotenv";
 
 import connectDatabase from "./config/db.js";
 
-import checkRole from "./middlewares/checkRole.js"
+
 import checkToken from "./middlewares/checkToken.js";
 
 import authRoutes from "./Routes/auth.routes.js";
@@ -48,8 +48,6 @@ app.get("/", (req, res) => {
 // Protected Route
 app.get(
   "/admin",
-  checkToken,
-  checkRole("admin"),
   (req, res) => {
     res.json({
       message: "Admin Route Working ✅",
