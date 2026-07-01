@@ -154,7 +154,7 @@ import Completeorder from "./Pages/Completeorder";
 import OrderComplete from "./Pages/OrderComplete";
 
 // Admin Screens
-import AdminLogin from "../../Frontend/src/Admin/Pages/AdminLogin"
+
 import Desboard from "./Admin/Desboard";
 import Book from "./Admin/Book";
 import User from "./Admin/User";
@@ -192,7 +192,7 @@ function App() {
 
         {/* <Route element={<ProtectedRoutes />}> */}
         {/* ADMIN PROTECTED ROUTES */}
-        <Route path="/authlogin" element={<AdminLogin />} />
+        
 
         <Route path="/admin" element={<Layout />}>
           <Route path="desboard" element={<Desboard />} />

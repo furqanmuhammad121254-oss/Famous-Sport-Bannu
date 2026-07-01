@@ -1,6 +1,3 @@
-
-
-
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -8,7 +5,7 @@ import env from "dotenv";
 
 import connectDatabase from "./config/db.js";
 
-import checkToken from "./middlewares/checkToken.js";
+import checkRole from "./middlewares/checkRole.js";
 import checkToken from "./middlewares/checkToken.js";
 
 import authRoutes from "./Routes/auth.routes.js";
@@ -33,7 +30,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_ONLINE_URL,
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );

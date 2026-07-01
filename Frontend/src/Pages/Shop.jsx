@@ -159,9 +159,9 @@ export default function AllProducts() {
                     <h2 className="font-bold text-sm text-neutral-200 group-hover:text-white transition-colors tracking-wide line-clamp-1">
                       {product.name}
                     </h2>
-                    <p className="text-[11px] text-neutral-500 leading-normal font-normal line-clamp-2 h-8">
+                    {/* <p className="text-[11px] text-neutral-500 leading-normal font-normal line-clamp-2 h-8">
                       {product.desc || "Premium specialized component module."}
-                    </p>
+                    </p> */}
                   </div>
 
                   {/* BOTTOM ACTION & VALUATION REGISTRY */}

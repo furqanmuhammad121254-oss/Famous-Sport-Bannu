@@ -4,15 +4,14 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import checkToken from "../middlewares/CheckToken.js"
-// import { adminSignup, adminLogin } from "../controllers/adminController.js";
+
 
 
 const router = express.Router();
 const mykeyForToken = 'pass@1234';
 // const mykeyForToken = process.env.MY_KEY_FOR_TOKEN;
 
-// router.post("/signup", adminSignup);
-// router.post("/login", adminLogin);
+
 
 
 
