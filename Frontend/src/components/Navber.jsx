@@ -95,7 +95,11 @@ const Navbar = () => {
               Login
             </button>
           ) : (
-           <div></div>
+           <div>
+              <button onClick={() => navigate("/login")} className="bg-yellow-400 text-black px-7 py-2 rounded font-semibold">
+              Login
+            </button>
+           </div>
           )}
         </div>
 
