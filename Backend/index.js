@@ -45,7 +45,6 @@ app.get("/", (req, res) => {
 // Protected Route
 app.get(
   "/admin",
-  checkToken,
   checkRole("admin"),
   (req, res) => {
     res.json({

@@ -8,8 +8,8 @@ import bcrypt from "bcrypt";
 
 
 const router = express.Router();
-// const mykeyForToken = 'pass@1234';
-const mykeyForToken = process.env.MY_KEY_FOR_TOKEN;
+const mykeyForToken = 'pass@1234';
+// const mykeyForToken = process.env.MY_KEY_FOR_TOKEN;
 
 
 
