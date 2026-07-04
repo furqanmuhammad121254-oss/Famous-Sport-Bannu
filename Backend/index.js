@@ -18,11 +18,9 @@ import contactRoutes from "./routes/contactRoutes.js";
 
 env.config();
 
-
+connectDatabase();
 const app = express();
 
-// Database
-connectDatabase();
 
 // Middleware
 app.use(express.json());
@@ -45,6 +43,7 @@ app.get("/", (req, res) => {
 // Protected Route
 app.get(
   "/admin",
+  checkToken,
   checkRole("admin"),
   (req, res) => {
     res.json({
