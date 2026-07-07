@@ -3,7 +3,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
-import checkToken from "../middlewares/CheckToken.js"
+
 
 
 
@@ -97,7 +97,7 @@ router.get("/all-users", async (req, res) => {
 });
 
 
-router.get("/me", checkToken, async (req, res) => {
+router.get("/me", async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select("-password");
     return res.status(200).json({ user });
