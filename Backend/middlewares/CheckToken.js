@@ -1,25 +1,55 @@
 
 
+// import jwt from "jsonwebtoken";
+
+// const checkToken = (req, res, next) => {
+//   try {
+//     const authHeader = req.headers.authorization;
+
+//     if (!authHeader) {
+//       return res.status(401).json({ msg: "No token" });
+//     }
+
+//     const token = authHeader.split(" ")[1];
+
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+//     req.user = decoded;
+
+//     next();
+
+//   } catch (error) {
+//     return res.status(401).json({ msg: "Invalid token" });
+//   }
+// };
+
+// export default checkToken;
+
+
 import jwt from "jsonwebtoken";
 
 const checkToken = (req, res, next) => {
   try {
-    const authHeader = req.headers.authorization;
+    const token = req.cookies?.token ||
+      req.headers.authorization?.split(" ")[1];
 
-    if (!authHeader) {
-      return res.status(401).json({ msg: "No token" });
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
     }
-
-    const token = authHeader.split(" ")[1];
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = decoded;
 
     next();
-
-  } catch (error) {
-    return res.status(401).json({ msg: "Invalid token" });
+  } catch (err) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid Token",
+    });
   }
 };
 

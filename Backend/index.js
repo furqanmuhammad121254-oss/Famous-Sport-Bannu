@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 import connectDatabase from "./config/db.js";
 
 import checkToken from "./middlewares/checkToken.js";
-import checkRole from "./middlewares/checkRole.js";
+
 
 import authRoutes from "./Routes/auth.routes.js";
 import BookRoutes from "./Routes/Book.routes.js";
@@ -56,7 +56,6 @@ app.get("/", (req, res) => {
 app.get(
   "/admin",
   checkToken,
-  checkRole("admin"),
   (req, res) => {
     res.status(200).json({
       success: true,
